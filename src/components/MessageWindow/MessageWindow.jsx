@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
 
 function MessageWindow() {
+  const { user } = useContext(AuthContext);
   const token = localStorage.getItem("accessToken");
   const receiverId = Number(useParams().id);
   const [conv, setConv] = useState([]);
@@ -66,6 +68,19 @@ function MessageWindow() {
       console.error(error);
     }
   };
+
+  const handleDelete = async (messageId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/message/${messageId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const deletedMessage = response.data.deletedMessage;
+      setConv((prevConv) => prevConv.filter((m) => m.id !== deletedMessage.id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <div>
@@ -75,6 +90,9 @@ function MessageWindow() {
               <p>
                 {msg.sender.username} : {msg.text}
               </p>
+              {user.id === msg.senderId && (
+                <button onClick={() => handleDelete(msg.id)}>...</button>
+              )}
             </div>
           ))
         ) : (
