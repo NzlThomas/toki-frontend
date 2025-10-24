@@ -63,7 +63,6 @@ function MessageWindow() {
       setMessage("");
       const { newMessage } = response.data;
       setConv((prevConv) => [...prevConv, newMessage]);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

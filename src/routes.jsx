@@ -17,7 +17,7 @@ const routes = [
     path: "/",
     element: (
       <ProtectedRoute>
-        <App />,
+        <App />
       </ProtectedRoute>
     ),
   },
