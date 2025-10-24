@@ -3,6 +3,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import LoginForm from "./components/LoginForm/LoginForm";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const routes = [
   {
@@ -26,6 +27,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <MessageWindow />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/user/:id",
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
       </ProtectedRoute>
     ),
   },
