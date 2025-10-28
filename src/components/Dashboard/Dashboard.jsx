@@ -12,9 +12,12 @@ function Dashboard() {
 
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
+  const [picture, setPicture] = useState(null);
 
   const [isUsernameChanged, setIsUsernameChanged] = useState(false);
   const [isBioChanged, setIsBioChanged] = useState(false);
+
+  const profilePictureUrl = `http://localhost:3000${user.picture}`;
 
   useEffect(() => {
     user.id !== requestedId && navigate("/");
@@ -61,6 +64,37 @@ function Dashboard() {
     setIsBioChanged(true);
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setPicture(file);
+  };
+
+  const handleUpdatePicture = async (e) => {
+    e.preventDefault();
+    if (!picture) return;
+
+    const formData = new FormData();
+    formData.append("picture", picture);
+
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/profile-picture/${user.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const updatedProfilePicture = res.data.updatedUser.picture;
+      setUser((prev) => ({ ...prev, picture: updatedProfilePicture }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <p>Bienvenue sur votre Dashboard, {user.username} !</p>
@@ -100,8 +134,14 @@ function Dashboard() {
         <button type="submit">Enregistrer les changements</button>
       </form>
 
+      <form onSubmit={handleUpdatePicture}>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        <button type="submit">Enregistrer</button>
+      </form>
+
       <div>
         <p>Infos actuelles:</p>
+        <img src={profilePictureUrl} alt="Photo de profil" />
         <p>Username: {user.username}</p>
         <p>Bio: {user.bio || "Pas de bio"}</p>
       </div>
