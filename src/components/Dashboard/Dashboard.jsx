@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
+import styles from "./Dashboard.module.css";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IoHomeSharp } from "react-icons/io5";
 
 function Dashboard() {
   const { user, setUser } = useContext(AuthContext);
@@ -14,6 +17,7 @@ function Dashboard() {
   const [bio, setBio] = useState("");
   const [picture, setPicture] = useState(null);
 
+  const [isPictureChanged, setIsPictureChanged] = useState(false);
   const [isUsernameChanged, setIsUsernameChanged] = useState(false);
   const [isBioChanged, setIsBioChanged] = useState(false);
 
@@ -64,7 +68,26 @@ function Dashboard() {
     setIsBioChanged(true);
   };
 
+  const hasUsernameChanged = (e) => {
+    if (e.target.value.trim() === "") {
+      setIsUsernameChanged(false);
+    } else {
+      setIsUsernameChanged(true);
+    }
+    setUsername(e.target.value);
+  };
+
+  const hasBioChanged = (e) => {
+    if (e.target.value.trim() === "") {
+      setIsBioChanged(false);
+    } else {
+      setIsBioChanged(true);
+    }
+    setBio(e.target.value);
+  };
+
   const handleFileChange = (e) => {
+    setIsPictureChanged(true);
     const file = e.target.files[0];
     if (!file) return;
     setPicture(file);
@@ -88,6 +111,7 @@ function Dashboard() {
           },
         }
       );
+      setIsPictureChanged(false);
       const updatedProfilePicture = res.data.updatedUser.picture;
       setUser((prev) => ({ ...prev, picture: updatedProfilePicture }));
     } catch (error) {
@@ -97,53 +121,65 @@ function Dashboard() {
 
   return (
     <div>
-      <p>Bienvenue sur votre Dashboard, {user.username} !</p>
-      <Link to="/">Accueil</Link>
+      <Link to="/">
+        <IoHomeSharp size={30} />
+      </Link>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Nom d'utilisateur:</label>
-        <input
-          name="username"
-          id="username"
-          onChange={(e) => {
-            setUsername(e.target.value);
-            setIsUsernameChanged(true);
-          }}
-          value={username}
-          placeholder={user.username}
-        />
+      <div className={styles.dashboardContainer}>
+        <div className={styles.picContainer}>
+          <img src={profilePictureUrl} alt="Photo de profil" />
+          <form onSubmit={handleUpdatePicture} className={styles.picForm}>
+            <label>Photo de profil:</label>
+            <input type="file" accept="image/*" onChange={handleFileChange} />
 
-        <label htmlFor="bio">Bio:</label>
-        <input
-          name="bio"
-          id="bio"
-          onChange={(e) => {
-            setBio(e.target.value);
-            setIsBioChanged(true);
-          }}
-          value={bio}
-          placeholder={user.bio || "Ajoutez une bio..."}
-        />
+            {isPictureChanged && <button type="submit">Enregistrer</button>}
+          </form>
+        </div>
 
-        {user.bio && (
-          <button type="button" onClick={handleResetBio}>
-            Supprimer la bio
-          </button>
-        )}
+        <div className={styles.infosContainer}>
+          <form onSubmit={handleSubmit} className={styles.infosForm}>
+            <div className={styles.nameContainer}>
+              <label htmlFor="username">Nom d'utilisateur:</label>
+              <input
+                name="username"
+                id="username"
+                onChange={(e) => {
+                  hasUsernameChanged(e);
+                }}
+                value={username}
+                placeholder={user.username}
+                autoComplete="off"
+              />
+            </div>
 
-        <button type="submit">Enregistrer les changements</button>
-      </form>
+            <div className={styles.bioContainer}>
+              <label htmlFor="bio">Bio:</label>
+              <textarea
+                id="bio"
+                name="bio"
+                rows="5"
+                cols="33"
+                onChange={(e) => {
+                  hasBioChanged(e);
+                }}
+                placeholder={user.bio || "Ajoutez une bio..."}
+                autoComplete="off"
+                value={bio}
+                maxLength={200}
+              ></textarea>
 
-      <form onSubmit={handleUpdatePicture}>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button type="submit">Enregistrer</button>
-      </form>
+              {user.bio && (
+                <button type="button" onClick={handleResetBio}>
+                  Supprimer la bio
+                </button>
+              )}
+            </div>
 
-      <div>
-        <p>Infos actuelles:</p>
-        <img src={profilePictureUrl} alt="Photo de profil" />
-        <p>Username: {user.username}</p>
-        <p>Bio: {user.bio || "Pas de bio"}</p>
+            {(isUsernameChanged || isBioChanged) && (
+              <button type="submit">Enregistrer</button>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

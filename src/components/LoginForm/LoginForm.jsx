@@ -46,6 +46,7 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="bob@gmail.com"
           required
+          autoComplete="on"
         />
         <label htmlFor="password">Mot de passe:</label>
         <input
@@ -56,6 +57,7 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Votre de passe..."
           required
+          autoComplete="off"
         />
         <button type="submit">Se connecter</button>
       </form>
