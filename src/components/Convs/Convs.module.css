@@ -1,0 +1,23 @@
+.convTitle {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profilePicture {
+  width: 5rem;
+  border-radius: 5px;
+}
+
+.convsListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-left: 1rem;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}

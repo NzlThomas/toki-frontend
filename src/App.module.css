@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem 1.5rem;
+}
+
+.displayContainer {
+  margin-top: 2.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  justify-content: center;
+}

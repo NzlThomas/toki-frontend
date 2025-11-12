@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
 import styles from "./Dashboard.module.css";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { IoHomeSharp } from "react-icons/io5";
 
 function Dashboard() {
@@ -127,7 +126,11 @@ function Dashboard() {
 
       <div className={styles.dashboardContainer}>
         <div className={styles.picContainer}>
-          <img src={profilePictureUrl} alt="Photo de profil" />
+          <img
+            src={profilePictureUrl}
+            alt="Photo de profil"
+            className={styles.profilePicture}
+          />
           <form onSubmit={handleUpdatePicture} className={styles.picForm}>
             <label>Photo de profil:</label>
             <input type="file" accept="image/*" onChange={handleFileChange} />

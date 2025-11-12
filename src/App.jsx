@@ -3,10 +3,13 @@ import { AuthContext } from "./contexts/AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBar from "./components/SearchBar/SearchBar";
+import Convs from "./components/Convs/Convs";
+import styles from "./App.module.css";
 
 function App() {
   const { user, logout } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -22,33 +25,42 @@ function App() {
     };
     fetchConversations();
   }, [token]);
+
+  const showSearchUser = () => {
+    setIsSearching(true);
+  };
+
+  const showConvList = () => {
+    setIsSearching(false);
+  };
+
   return (
     <>
       <div>
-        <button onClick={logout}>Deco</button>
-        <p>je suis app, et protégé ! Bievenue {user.username}</p>
-        <Link to={`/dashboard/user/${user.id}`}>Dashboard</Link>
-
-        <SearchBar />
+        <div className={styles.nav}>
+          <Link to={`/dashboard/user/${user.id}`}>Profil</Link>
+          <button onClick={logout}>Deco</button>
+        </div>
 
         <div>
-          <h3>Vos conversations</h3>
-          {users.length > 0 ? (
-            users.map((user) => (
-              <Link key={user.id} to={`/messages/${user.id}`}>
-                <div>
-                  <img
-                    src={`http://localhost:3000${user.picture}`}
-                    alt={user.username}
-                    style={{ width: "10%" }}
-                  />
-                  <span>{user.username}</span>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <p>Aucune conversation pour le moment.</p>
-          )}
+          <div className={styles.displayContainer}>
+            <button
+              type="button"
+              onClick={showConvList}
+              className={!isSearching ? styles.activeTab : styles.inactiveTab}
+            >
+              Conversations
+            </button>
+            <button
+              type="button"
+              onClick={showSearchUser}
+              className={isSearching ? styles.activeTab : styles.inactiveTab}
+            >
+              Chercher un utilisateur
+            </button>
+          </div>
+
+          {isSearching ? <SearchBar /> : <Convs users={users} />}
         </div>
       </div>
     </>

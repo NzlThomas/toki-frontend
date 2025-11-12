@@ -44,7 +44,7 @@
   gap: 8px;
 }
 
-img {
+.profilePicture {
   width: 13rem;
   border: 3px solid rgb(107, 107, 107);
   border-radius: 100%;

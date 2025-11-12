@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import styles from "./SearchBar.module.css";
 
 function SearchBar() {
   const [search, setSearch] = useState("");
@@ -33,17 +34,29 @@ function SearchBar() {
 
   return (
     <div>
-      <input
-        placeholder="Nom d'utilisateur"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div>
+      <div className={styles.searchInput}>
+        <input
+          placeholder="Chercher un utilisateur..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      <div className={styles.convsListContainer}>
         {hasSearched &&
           (results.length > 0 ? (
             results.map((r) => (
               <div key={r.id}>
-                <Link to={`/messages/${r.id}`}>{r.username}</Link>
+                <Link to={`/messages/${r.id}`}>
+                  <div className={styles.cardContainer}>
+                    <img
+                      src={`http://localhost:3000${r.picture}`}
+                      alt={r.username}
+                      className={styles.profilePicture}
+                    />
+                    {r.username}
+                  </div>
+                </Link>
               </div>
             ))
           ) : (

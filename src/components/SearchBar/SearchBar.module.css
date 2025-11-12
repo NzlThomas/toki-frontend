@@ -1,0 +1,23 @@
+.searchInput {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profilePicture {
+  width: 5rem;
+  border-radius: 5px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.convsListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-left: 1rem;
+}
