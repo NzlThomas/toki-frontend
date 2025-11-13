@@ -4,11 +4,14 @@ import styles from "./Convs.module.css";
 function Convs({ users }) {
   return (
     <div>
-      <p className={styles.convTitle}>Vos conversations:</p>
       <div className={styles.convsListContainer}>
         {users.length > 0 ? (
           users.map((user) => (
-            <Link key={user.id} to={`/messages/${user.id}`}>
+            <Link
+              key={user.id}
+              to={`/messages/${user.id}`}
+              className={styles.linkCard}
+            >
               <div className={styles.cardContainer}>
                 <img
                   src={`http://localhost:3000${user.picture}`}

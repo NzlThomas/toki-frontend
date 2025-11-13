@@ -1,6 +1,13 @@
-.convTitle {
-  margin-bottom: 2rem;
-  text-align: center;
+.linkCard {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2);
+}
+
+.linkCard:hover {
+  background-color: rgb(245, 245, 245);
+  transition: background-color ease 0.5s;
 }
 
 .profilePicture {
@@ -11,8 +18,7 @@
 .convsListContainer {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin-left: 1rem;
+  gap: 0.8rem;
 }
 
 .cardContainer {
@@ -20,4 +26,6 @@
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+  padding: 1rem 0;
+  padding-left: 1rem;
 }

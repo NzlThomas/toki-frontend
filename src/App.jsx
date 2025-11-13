@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { RiLogoutBoxFill } from "react-icons/ri";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Convs from "./components/Convs/Convs";
 import styles from "./App.module.css";
@@ -38,8 +39,17 @@ function App() {
     <>
       <div>
         <div className={styles.nav}>
-          <Link to={`/dashboard/user/${user.id}`}>Profil</Link>
-          <button onClick={logout}>Deco</button>
+          <Link to={`/dashboard/user/${user.id}`}>
+            <img
+              src={`http://localhost:3000${user.picture}`}
+              alt="Photo de profil utilisateur"
+              className={styles.navProfilePicture}
+            />
+            {user.username}
+          </Link>
+          <button onClick={logout} className={styles.logoutButton}>
+            <RiLogoutBoxFill size={25} />
+          </button>
         </div>
 
         <div>
@@ -49,7 +59,7 @@ function App() {
               onClick={showConvList}
               className={!isSearching ? styles.activeTab : styles.inactiveTab}
             >
-              Conversations
+              Vos conversations
             </button>
             <button
               type="button"
