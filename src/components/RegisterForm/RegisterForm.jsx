@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function RegisterForm() {
   const [username, setUsername] = useState("");
@@ -38,6 +39,7 @@ function RegisterForm() {
           name="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="off"
         />
         <label htmlFor="email">Email:</label>
         <input
@@ -46,6 +48,7 @@ function RegisterForm() {
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="off"
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -54,9 +57,11 @@ function RegisterForm() {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="off"
         />
         <button type="submit">Register</button>
       </form>
+      <Link to="/login">Déjà un compte ? Connectez-vous !</Link>
     </div>
   );
 }

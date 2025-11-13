@@ -39,6 +39,7 @@ function SearchBar() {
           placeholder="Chercher un utilisateur..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          name="searchUser"
         />
       </div>
 

@@ -132,8 +132,14 @@ function Dashboard() {
             className={styles.profilePicture}
           />
           <form onSubmit={handleUpdatePicture} className={styles.picForm}>
-            <label>Photo de profil:</label>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <label htmlFor="profilePicture">Photo de profil:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              name="profilePicture"
+              id="profilePicture"
+            />
 
             {isPictureChanged && <button type="submit">Enregistrer</button>}
           </form>
