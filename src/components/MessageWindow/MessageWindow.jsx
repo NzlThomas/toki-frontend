@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
+import styles from "./MessageWindow.module.css";
 
 function MessageWindow() {
   const { user } = useContext(AuthContext);
@@ -100,17 +101,24 @@ function MessageWindow() {
       </div>
       <div>
         {receiver ? (
-          <textarea
-            placeholder={`Envoyer un message à ${receiver.username}`}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage();
-              }
-            }}
-          />
+          <div>
+            <label htmlFor="message" className={styles.srOnly}>
+              Envoyer un message à {receiver.username}
+            </label>
+            <textarea
+              placeholder={`Envoyer un message à ${receiver.username}`}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
+              name="message"
+              id="message"
+            />
+          </div>
         ) : (
           <p>Chargement de la conversation...</p>
         )}
