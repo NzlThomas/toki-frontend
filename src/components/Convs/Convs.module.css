@@ -21,6 +21,10 @@
   gap: 0.8rem;
 }
 
+.convsListContainer p {
+  text-align: center;
+}
+
 .cardContainer {
   display: flex;
   flex-direction: row;
@@ -28,4 +32,20 @@
   gap: 1rem;
   padding: 1rem 0;
   padding-left: 1rem;
+}
+
+@media (min-width: 1200px) {
+  .cardContainer {
+    font-size: 18px;
+  }
+
+  .convsListContainer {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .convsListContainer p {
+    margin-top: 1rem;
+    font-size: 19px;
+  }
 }

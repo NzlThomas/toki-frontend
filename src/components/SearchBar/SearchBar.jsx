@@ -7,6 +7,7 @@ function SearchBar() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -18,12 +19,14 @@ function SearchBar() {
 
     const timeout = setTimeout(async () => {
       try {
+        setIsLoading(true);
         const res = await axios.get(
           `http://localhost:3000/search/users/${search}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setResults(res.data);
         setHasSearched(true);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -45,25 +48,31 @@ function SearchBar() {
       </div>
 
       <div className={styles.convsListContainer}>
-        {hasSearched &&
-          (results.length > 0 ? (
-            results.map((r) => (
-              <div key={r.id} className={styles.linkCard}>
-                <Link to={`/messages/${r.id}`}>
-                  <div className={styles.cardContainer}>
-                    <img
-                      src={`http://localhost:3000${r.picture}`}
-                      alt={r.username}
-                      className={styles.profilePicture}
-                    />
-                    {r.username}
+        {isLoading ? (
+          <p>Chargement en cours...</p>
+        ) : (
+          <>
+            {hasSearched &&
+              (results.length > 0 ? (
+                results.map((r) => (
+                  <div key={r.id} className={styles.linkCard}>
+                    <Link to={`/messages/${r.id}`}>
+                      <div className={styles.cardContainer}>
+                        <img
+                          src={`http://localhost:3000${r.picture}`}
+                          alt={r.username}
+                          className={styles.profilePicture}
+                        />
+                        {r.username}
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-            ))
-          ) : (
-            <p>Aucun utilisateur trouvé</p>
-          ))}
+                ))
+              ) : (
+                <p>Aucun utilisateur trouvé</p>
+              ))}
+          </>
+        )}
       </div>
     </div>
   );

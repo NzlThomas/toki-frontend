@@ -10,16 +10,19 @@ import styles from "./App.module.css";
 function App() {
   const { user, logout } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
+        setIsLoading(true);
         const res = await axios.get("http://localhost:3000/conversations", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(res.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -48,7 +51,7 @@ function App() {
             {user.username}
           </Link>
           <button onClick={logout} className={styles.logoutButton}>
-            <RiLogoutBoxFill size={25} />
+            <RiLogoutBoxFill className={styles.logoutIcon} />
           </button>
         </div>
 
@@ -70,7 +73,11 @@ function App() {
             </button>
           </div>
 
-          {isSearching ? <SearchBar /> : <Convs users={users} />}
+          {isSearching ? (
+            <SearchBar />
+          ) : (
+            <Convs users={users} isLoading={isLoading} />
+          )}
         </div>
       </div>
     </>
