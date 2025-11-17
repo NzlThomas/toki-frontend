@@ -34,12 +34,13 @@ function SearchBar() {
 
   return (
     <div>
-      <div className={styles.searchInput}>
+      <div className={styles.inputContainer}>
         <input
           placeholder="Chercher un utilisateur..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           name="searchUser"
+          className={styles.input}
         />
       </div>
 
@@ -47,7 +48,7 @@ function SearchBar() {
         {hasSearched &&
           (results.length > 0 ? (
             results.map((r) => (
-              <div key={r.id}>
+              <div key={r.id} className={styles.linkCard}>
                 <Link to={`/messages/${r.id}`}>
                   <div className={styles.cardContainer}>
                     <img
