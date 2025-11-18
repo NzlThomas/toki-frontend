@@ -64,7 +64,7 @@ function SearchBar() {
                           className={styles.profilePicture}
                         />
                         <div className={styles.nameBioContainer}>
-                          <p>{r.username}</p>
+                          <p className={styles.userParagraph}>{r.username}</p>
                           <p className={styles.bioParagraph}>{r.bio}</p>
                         </div>
                       </div>

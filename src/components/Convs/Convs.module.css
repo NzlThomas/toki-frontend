@@ -20,11 +20,6 @@
   flex-direction: column;
   gap: 0.8rem;
 }
-
-.convsListContainer p {
-  text-align: center;
-}
-
 .cardContainer {
   display: flex;
   flex-direction: row;
@@ -62,12 +57,15 @@
   }
 
   .convsListContainer {
-    width: 70%;
+    width: 55%;
     margin: 0 auto;
   }
 
-  .convsListContainer p {
+  .userParagraph {
     margin-top: 1rem;
-    font-size: 19px;
+  }
+
+  .bioParagraph {
+    font-size: 15px;
   }
 }

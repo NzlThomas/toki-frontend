@@ -23,7 +23,7 @@ function Convs({ users, isLoading }) {
                       className={styles.profilePicture}
                     />
                     <div className={styles.nameBioContainer}>
-                      <p>{user.username}</p>
+                      <p className={styles.userParagraph}>{user.username}</p>
                       <p className={styles.bioParagraph}>{user.bio}</p>
                     </div>
                   </div>

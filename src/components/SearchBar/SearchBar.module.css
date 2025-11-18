@@ -64,28 +64,29 @@
   word-break: break-word;
   width: 80%;
 }
-
 @media (min-width: 1200px) {
-  @media (min-width: 1200px) {
-    .cardContainer {
-      font-size: 18px;
-    }
+  .cardContainer {
+    font-size: 18px;
+  }
 
-    .convsListContainer {
-      width: 70%;
-      margin: 0 auto;
-    }
+  .convsListContainer {
+    width: 55%;
+    margin: 0 auto;
+  }
 
-    .input {
-      width: 40%;
-      font-size: 16px;
-      padding: 1rem;
-    }
+  .input {
+    width: 40%;
+    font-size: 16px;
+    padding: 1rem;
+  }
 
-    .convsListContainer p {
-      margin-top: 1rem;
-      font-size: 19px;
-    }
+  .userParagraph {
+    margin-top: 1rem;
+  }
+
+  .bioParagraph {
+    font-size: 15px;
+    margin-top: 0rem;
   }
 
   .linkCard:hover {
