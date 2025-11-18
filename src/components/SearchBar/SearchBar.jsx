@@ -63,7 +63,10 @@ function SearchBar() {
                           alt={r.username}
                           className={styles.profilePicture}
                         />
-                        {r.username}
+                        <div className={styles.nameBioContainer}>
+                          <p>{r.username}</p>
+                          <p className={styles.bioParagraph}>{r.bio}</p>
+                        </div>
                       </div>
                     </Link>
                   </div>

@@ -22,7 +22,10 @@ function Convs({ users, isLoading }) {
                       alt={user.username}
                       className={styles.profilePicture}
                     />
-                    <p>{user.username}</p>
+                    <div className={styles.nameBioContainer}>
+                      <p>{user.username}</p>
+                      <p className={styles.bioParagraph}>{user.bio}</p>
+                    </div>
                   </div>
                 </Link>
               ))
