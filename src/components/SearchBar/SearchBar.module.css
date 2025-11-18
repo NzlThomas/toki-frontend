@@ -69,4 +69,9 @@
       font-size: 19px;
     }
   }
+
+  .linkCard:hover {
+    background-color: rgb(245, 245, 245);
+    transition: background-color ease 0.5s;
+  }
 }

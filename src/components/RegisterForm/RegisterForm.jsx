@@ -40,6 +40,8 @@ function RegisterForm() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           autoComplete="off"
+          minLength={3}
+          maxLength={20}
         />
         <label htmlFor="email">Email:</label>
         <input

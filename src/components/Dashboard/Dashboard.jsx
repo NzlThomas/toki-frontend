@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
 import styles from "./Dashboard.module.css";
-import { IoHomeSharp } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Dashboard() {
   const { user, setUser } = useContext(AuthContext);
@@ -15,6 +15,7 @@ function Dashboard() {
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [picture, setPicture] = useState(null);
+  const [fileName, setFileName] = useState("");
 
   const [isPictureChanged, setIsPictureChanged] = useState(false);
   const [isUsernameChanged, setIsUsernameChanged] = useState(false);
@@ -87,6 +88,7 @@ function Dashboard() {
 
   const handleFileChange = (e) => {
     setIsPictureChanged(true);
+    setFileName(e.target.files[0].name);
     const file = e.target.files[0];
     if (!file) return;
     setPicture(file);
@@ -113,6 +115,7 @@ function Dashboard() {
       setIsPictureChanged(false);
       const updatedProfilePicture = res.data.updatedUser.picture;
       setUser((prev) => ({ ...prev, picture: updatedProfilePicture }));
+      setFileName("");
     } catch (error) {
       console.error(error);
     }
@@ -120,9 +123,11 @@ function Dashboard() {
 
   return (
     <div>
-      <Link to="/">
-        <IoHomeSharp size={30} />
-      </Link>
+      <div className={styles.nav}>
+        <Link to="/">
+          <FaArrowLeft className={styles.homeIcon} />
+        </Link>
+      </div>
 
       <div className={styles.dashboardContainer}>
         <div className={styles.picContainer}>
@@ -132,23 +137,38 @@ function Dashboard() {
             className={styles.profilePicture}
           />
           <form onSubmit={handleUpdatePicture} className={styles.picForm}>
-            <label htmlFor="profilePicture">Photo de profil:</label>
+            {fileName && (
+              <p className={styles.selectedFile}>
+                Fichier choisi: <span>{fileName}</span>
+              </p>
+            )}
+            <label htmlFor="profilePicture" className={styles.profilePicLabel}>
+              Importer une image
+            </label>
+
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
               name="profilePicture"
               id="profilePicture"
+              className={styles.fileInput}
             />
 
-            {isPictureChanged && <button type="submit">Enregistrer</button>}
+            {isPictureChanged && (
+              <button type="submit" className={styles.savePicture}>
+                Enregistrer la photo de profil
+              </button>
+            )}
           </form>
         </div>
 
         <div className={styles.infosContainer}>
           <form onSubmit={handleSubmit} className={styles.infosForm}>
             <div className={styles.nameContainer}>
-              <label htmlFor="username">Nom d'utilisateur:</label>
+              <label htmlFor="username" className={styles.usernameLabel}>
+                Nom d'utilisateur:
+              </label>
               <input
                 name="username"
                 id="username"
@@ -158,16 +178,19 @@ function Dashboard() {
                 value={username}
                 placeholder={user.username}
                 autoComplete="off"
+                className={styles.input}
+                minLength={3}
+                maxLength={20}
               />
             </div>
 
             <div className={styles.bioContainer}>
-              <label htmlFor="bio">Bio:</label>
+              <label htmlFor="bio" className={styles.bioLabel}>
+                Bio:
+              </label>
               <textarea
                 id="bio"
                 name="bio"
-                rows="5"
-                cols="33"
                 onChange={(e) => {
                   hasBioChanged(e);
                 }}
@@ -178,14 +201,20 @@ function Dashboard() {
               ></textarea>
 
               {user.bio && (
-                <button type="button" onClick={handleResetBio}>
+                <button
+                  type="button"
+                  onClick={handleResetBio}
+                  className={styles.bioResetButton}
+                >
                   Supprimer la bio
                 </button>
               )}
             </div>
 
             {(isUsernameChanged || isBioChanged) && (
-              <button type="submit">Enregistrer</button>
+              <button type="submit" className={styles.saveButton}>
+                Enregistrer les changements
+              </button>
             )}
           </form>
         </div>

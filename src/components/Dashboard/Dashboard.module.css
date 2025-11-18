@@ -1,7 +1,97 @@
 .dashboardContainer {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1.5rem;
+}
+
+.nav {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.homeIcon {
+  font-size: 40px;
+  color: rgb(48, 48, 48);
+}
+
+.profilePicLabel {
+  font-weight: 500;
+  padding: 10px 16px;
+  background-color: rgb(52, 90, 214);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: 2px solid rgb(52, 90, 214);
+}
+
+.profilePicLabel:hover {
+  background-color: white;
+  color: rgb(52, 90, 214);
+  border: 2px solid rgb(52, 90, 214);
+}
+
+.selectedFile {
+  font-weight: 500;
+}
+
+.selectedFile span {
+  font-weight: 400;
+  font-style: italic;
+}
+.savePicture {
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(39, 172, 34);
+  border: 2px solid rgb(39, 172, 34);
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.savePicture:hover {
+  cursor: pointer;
+  color: rgb(39, 172, 34);
+  background-color: white;
+  border: 2px solid rgb(39, 172, 34);
+  transition: background-color 0.2s ease;
+}
+
+.fileInput {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.usernameLabel {
+  font-weight: 500;
+  text-decoration: underline;
+  font-size: 19px;
+  margin-bottom: 0.5rem;
+}
+
+.bioLabel {
+  font-weight: 500;
+  text-decoration: underline;
+  font-size: 19px;
+}
+
+.input {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgb(206, 206, 206);
+  margin-bottom: 0.5rem;
+}
+
+.input:focus {
+  outline: 2px solid rgb(30, 64, 175);
 }
 
 .picContainer {
@@ -45,11 +135,60 @@
 }
 
 .profilePicture {
-  width: 13rem;
+  width: 10rem;
   border-radius: 100%;
   margin-bottom: 1rem;
 }
 
 textarea {
   resize: none;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgb(206, 206, 206);
+  width: 20rem;
+  height: 10rem;
+  margin-bottom: 0.5rem;
+}
+
+textarea:focus {
+  outline: 2px solid rgb(30, 64, 175);
+}
+
+.saveButton {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(39, 172, 34);
+  border: 2px solid rgb(39, 172, 34);
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.saveButton:hover {
+  cursor: pointer;
+  color: rgb(39, 172, 34);
+  background-color: white;
+  border: 2px solid rgb(39, 172, 34);
+  transition: background-color 0.2s ease;
+}
+
+.bioResetButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(221, 66, 66);
+  border: 2px solid rgb(221, 66, 66);
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.bioResetButton:hover {
+  cursor: pointer;
+  color: rgb(221, 66, 66);
+  background-color: white;
+  border: 2px solid rgb(221, 66, 66);
+  transition: background-color 0.2s ease;
 }
