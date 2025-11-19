@@ -192,3 +192,47 @@ textarea:focus {
   border: 2px solid rgb(221, 66, 66);
   transition: background-color 0.2s ease;
 }
+
+@media (min-width: 1200px) {
+  .profilePicture {
+    width: 12rem;
+  }
+
+  .profilePicLabel {
+    padding: 13px 18px;
+  }
+
+  .usernameLabel {
+    font-size: 22px;
+  }
+
+  .bioLabel {
+    font-size: 22px;
+  }
+
+  .input {
+    padding: 1rem 1.5rem;
+    font-size: 16px;
+  }
+
+  textarea {
+    padding: 0.8rem 1rem;
+    width: 27rem;
+    height: 10rem;
+  }
+
+  .bioResetButton {
+    padding: 1rem 2rem;
+    font-size: 15px;
+  }
+
+  .saveButton {
+    padding: 1rem 1.75rem;
+    font-size: 17px;
+  }
+
+  .savePicture {
+    padding: 1rem 1.75rem;
+    font-size: 17px;
+  }
+}
