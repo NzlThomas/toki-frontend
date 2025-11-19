@@ -42,6 +42,12 @@
   background-color: #f0f0f0;
 }
 
+.logoutButton span {
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
 .displayContainer {
   margin-top: 2.5rem;
   margin-bottom: 1.75rem;
@@ -93,6 +99,11 @@
 
   .logoutButton {
     font-size: 50px;
+  }
+
+  .logoutButton span {
+    font-size: 18px;
+    font-weight: 500;
   }
 
   .logoutIcon {

@@ -51,7 +51,8 @@ function App() {
             {user.username}
           </Link>
           <button onClick={logout} className={styles.logoutButton}>
-            <RiLogoutBoxFill className={styles.logoutIcon} />
+            <RiLogoutBoxFill className={styles.logoutIcon} />{" "}
+            <span>Déconnexion</span>
           </button>
         </div>
 
