@@ -80,3 +80,13 @@ a {
 a:hover {
   text-decoration: none;
 }
+
+@media (min-width: 1200px) {
+  .registerContainer {
+    width: 25%;
+  }
+
+  .registerButton {
+    font-size: 16.5px;
+  }
+}
