@@ -189,6 +189,7 @@ function Dashboard() {
                 Bio:
               </label>
               <textarea
+                className={styles.dashboardTextarea}
                 id="bio"
                 name="bio"
                 onChange={(e) => {

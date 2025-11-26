@@ -140,7 +140,7 @@
   margin-bottom: 1rem;
 }
 
-textarea {
+.dashboardTextarea {
   resize: none;
   padding: 0.8rem 1rem;
   border-radius: 10px;
@@ -148,9 +148,10 @@ textarea {
   width: 20rem;
   height: 10rem;
   margin-bottom: 0.5rem;
+  resize: none;
 }
 
-textarea:focus {
+.dashboardTextarea:focus {
   outline: 2px solid rgb(30, 64, 175);
 }
 
@@ -215,7 +216,7 @@ textarea:focus {
     font-size: 16px;
   }
 
-  textarea {
+  .dashboardTextarea {
     padding: 0.8rem 1rem;
     width: 27rem;
     height: 10rem;
