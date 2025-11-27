@@ -103,7 +103,12 @@ function MessageWindow() {
               alt={receiver.username}
               className={styles.headerPicture}
             />
-            <p>{receiver.username}</p>
+            <div>
+              <p className={styles.receiverUsername}>{receiver.username}</p>
+              <p className={styles.receiverBio} title={user.bio}>
+                {receiver.bio}
+              </p>
+            </div>
           </div>
 
           <div>
