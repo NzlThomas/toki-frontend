@@ -30,7 +30,9 @@ function Convs({ users, isLoading }) {
                 </Link>
               ))
             ) : (
-              <p>Aucune conversation pour le moment.</p>
+              <p className={styles.noConv}>
+                Aucune conversation pour le moment.
+              </p>
             )}
           </>
         )}

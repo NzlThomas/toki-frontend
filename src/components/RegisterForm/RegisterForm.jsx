@@ -8,21 +8,34 @@ function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   const navigate = useNavigate();
 
+  function handlePasswordError() {
+    setPasswordError(true);
+    setPassword("");
+    setConfirmPassword("");
+  }
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      handlePasswordError();
+      return;
+    }
     try {
-      const res = await axios.post("http://localhost:3000/register", {
+      await axios.post("http://localhost:3000/register", {
         username,
         email,
         password,
+        confirmPassword,
       });
-      console.log("Response:", res.data);
       setUsername("");
       setEmail("");
       setPassword("");
+      setConfirmPassword("");
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -68,10 +81,36 @@ function RegisterForm() {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError(false);
+            }}
             autoComplete="off"
             placeholder="Mot de passe..."
           />
+          <label
+            htmlFor="confirmPassword"
+            className={styles.confirmPasswordLabel}
+          >
+            Confirmer le mot de passe:
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              setPasswordError(false);
+            }}
+            autoComplete="off"
+            placeholder="Confirmer le mot de passe"
+          />
+          {passwordError && (
+            <p className={styles.registerError}>
+              Erreur: Les mots de passe ne correspondent pas.
+            </p>
+          )}
           <button type="submit" className={styles.registerButton}>
             Créer un compte
           </button>

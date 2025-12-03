@@ -25,14 +25,16 @@
 
 .emailLabel,
 .usernameLabel,
-.passwordLabel {
+.passwordLabel,
+.confirmPasswordLabel {
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 0.5rem;
 }
 
 .passwordLabel,
-.emailLabel {
+.emailLabel,
+.confirmPasswordLabel {
   margin-top: 2rem;
 }
 
@@ -45,6 +47,7 @@ input {
   padding: 1rem 1.5rem;
   border-radius: 10px;
   border: 1px solid rgb(206, 206, 206);
+  width: 15rem;
 }
 
 input:focus {
@@ -79,6 +82,13 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+.registerError {
+  padding: 0 1.5rem;
+  margin-top: 1rem;
+  color: rgb(248, 0, 0);
+  text-align: center;
 }
 
 @media (min-width: 1200px) {
