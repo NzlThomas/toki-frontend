@@ -7,10 +7,16 @@ import styles from "./LoginForm.module.css";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const { login, user } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  function errorLogin() {
+    setError(true);
+    setPassword("");
+  }
 
   useEffect(() => {
     if (user) {
@@ -31,6 +37,7 @@ function LoginForm() {
       navigate("/");
     } catch (error) {
       console.error("Error:", error);
+      errorLogin();
     }
   };
 
@@ -47,7 +54,10 @@ function LoginForm() {
             id="email"
             name="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError(false);
+            }}
             placeholder="bob@gmail.com"
             required
             autoComplete="on"
@@ -60,11 +70,20 @@ function LoginForm() {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError(false);
+            }}
             placeholder="Votre de passe..."
             required
             autoComplete="off"
           />
+          {error && (
+            <p className={styles.loginError}>
+              Erreur: e-mail et/ou mot de passe incorrect.
+            </p>
+          )}
+
           <button type="submit" className={styles.loginButton}>
             Se connecter
           </button>
