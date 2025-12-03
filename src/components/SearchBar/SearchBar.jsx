@@ -72,7 +72,7 @@ function SearchBar() {
                   </div>
                 ))
               ) : (
-                <p>Aucun utilisateur trouvé</p>
+                <p className={styles.userNotFound}>Aucun utilisateur trouvé</p>
               ))}
           </>
         )}

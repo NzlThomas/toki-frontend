@@ -46,7 +46,7 @@ input {
 }
 
 input:focus {
-  outline: 2px solid rgb(30, 64, 175);
+  outline: 2px solid rgb(83, 83, 83);
 }
 
 .loginButton {
