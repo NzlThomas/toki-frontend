@@ -85,6 +85,17 @@
   max-width: 90%;
 }
 
+.noMessage {
+  width: 80%;
+  text-align: center;
+  font-size: 19px;
+  margin: auto auto;
+}
+
+.noMessage span {
+  font-weight: bold;
+}
+
 .mContainer span {
   font-weight: 500;
 }

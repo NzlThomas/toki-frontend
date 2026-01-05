@@ -58,7 +58,7 @@ function LoginForm() {
               setEmail(e.target.value);
               setError(false);
             }}
-            placeholder="bob@gmail.com"
+            placeholder="john@email.com"
             required
             autoComplete="on"
           />

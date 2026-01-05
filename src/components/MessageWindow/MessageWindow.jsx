@@ -140,7 +140,10 @@ function MessageWindow() {
                 </div>
               ))
             ) : (
-              <p>Aucun message pour le moment.</p>
+              <p className={styles.noMessage}>
+                Aucun message avec <span>{receiver.username}</span> pour le
+                moment.
+              </p>
             )}
             <div ref={messagesEndRef} />
           </div>
