@@ -16,9 +16,13 @@
   font-size: 45px;
 }
 
+.pageContainer {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
 .mainContainer {
   margin-top: 10rem;
-  min-height: 100vh;
   text-align: center;
 }
 
