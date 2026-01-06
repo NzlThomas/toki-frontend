@@ -45,7 +45,7 @@ function RegisterForm() {
   return (
     <div className={styles.registerBackground}>
       <div className={styles.registerContainer}>
-        <h1>Créer un compte:</h1>
+        <h1 className={styles.createTitle}>Créer un compte:</h1>
         <form onSubmit={handleRegisterSubmit} className={styles.registerForm}>
           <label htmlFor="username" className={styles.usernameLabel}>
             Nom d'utilisateur
@@ -115,7 +115,7 @@ function RegisterForm() {
             Créer un compte
           </button>
         </form>
-        <Link to="/login">Déjà un compte ? Connectez-vous !</Link>
+        <Link to="/login">Se connecter</Link>
       </div>
     </div>
   );

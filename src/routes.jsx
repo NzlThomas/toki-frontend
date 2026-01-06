@@ -4,6 +4,7 @@ import RegisterForm from "./components/RegisterForm/RegisterForm";
 import LoginForm from "./components/LoginForm/LoginForm";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 import Dashboard from "./components/Dashboard/Dashboard";
+import LandingPage from "./components/LandingPage/LandingPage";
 
 const routes = [
   {
@@ -16,6 +17,10 @@ const routes = [
   },
   {
     path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/conversations",
     element: (
       <ProtectedRoute>
         <App />

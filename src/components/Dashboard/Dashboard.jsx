@@ -124,7 +124,7 @@ function Dashboard() {
   return (
     <div>
       <div className={styles.nav}>
-        <Link to="/">
+        <Link to="/conversations">
           <FaArrowLeft className={styles.homeIcon} />
         </Link>
       </div>

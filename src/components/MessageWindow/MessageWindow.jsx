@@ -112,7 +112,7 @@ function MessageWindow() {
           </div>
 
           <div>
-            <Link to="/">
+            <Link to="/conversations">
               <FaArrowLeft className={styles.homeIcon} />
             </Link>
           </div>

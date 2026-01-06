@@ -20,7 +20,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/conversations");
     }
   }, [user, navigate]);
 
@@ -34,7 +34,7 @@ function LoginForm() {
       });
 
       login(res.data.token, res.data.user);
-      navigate("/");
+      navigate("/conversations");
     } catch (error) {
       console.error("Error:", error);
       errorLogin();
@@ -44,7 +44,7 @@ function LoginForm() {
   return (
     <div className={styles.loginBackground}>
       <div className={styles.loginContainer}>
-        <h1>Se connecter:</h1>
+        <h1 className={styles.loginTitle}>Se connecter:</h1>
         <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
           <label htmlFor="email" className={styles.emailLabel}>
             E-mail:
