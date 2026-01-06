@@ -1,8 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import { AiFillMessage } from "react-icons/ai";
 import styles from "./LandingPage.module.css";
 
 function LandingPage() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/conversations");
+    }
+  }, [user, navigate]);
+
   return (
     <div className={styles.pageContainer}>
       <header className={styles.header}>
