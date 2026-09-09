@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import axios from "axios";
+import api from "../../api/api.Js";
 import styles from "./MessageWindow.module.css";
 import { FaArrowLeft } from "react-icons/fa";
-import { IoSend } from "react-icons/io5";
+import { IoSend, IoReload } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa6";
 
 function MessageWindow() {
@@ -19,14 +19,11 @@ function MessageWindow() {
   useEffect(() => {
     const fetchConv = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/messages/${receiverId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await api.get(`/messages/${receiverId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setConv(response.data.conversation);
       } catch (error) {
@@ -36,14 +33,11 @@ function MessageWindow() {
 
     const fetchReceiver = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/user/${receiverId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await api.get(`/user/${receiverId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setReceiver(response.data);
       } catch (error) {
         console.error(error);
@@ -51,27 +45,29 @@ function MessageWindow() {
     };
     fetchReceiver();
     fetchConv();
-
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
-    }
   }, [receiverId, token]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
-  }, [conv]);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+
+    receiver
+      ? (document.title = `Toki | ${receiver.username}`)
+      : (document.title = "Toki | Chargement de la conversation");
+  }, [conv, receiver]);
 
   const handleSendMessage = async () => {
     try {
       if (message.trim() === "") {
         return;
       }
-      const response = await axios.post(
-        `http://localhost:3000/messages/${receiverId}`,
+      const response = await api.post(
+        `/messages/${receiverId}`,
         { message },
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
       setMessage("");
       const { newMessage } = response.data;
@@ -81,12 +77,25 @@ function MessageWindow() {
     }
   };
 
+  const handleReload = async () => {
+    try {
+      const response = await api.get(`/messages/${receiverId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setConv(response.data.conversation);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleDelete = async (messageId) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/message/${messageId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await api.delete(`/message/${messageId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const deletedMessage = response.data.deletedMessage;
       setConv((prevConv) => prevConv.filter((m) => m.id !== deletedMessage.id));
     } catch (error) {
@@ -99,8 +108,11 @@ function MessageWindow() {
         <div className={styles.receiverHeader}>
           <div className={styles.receiverInfos}>
             <img
-              src={`http://localhost:3000${receiver.picture}`}
-              alt={receiver.username}
+              src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${receiver.picture}`}
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.webp";
+              }}
+              alt={`Photo de profil de ${receiver.username}`}
               className={styles.headerPicture}
             />
             <div>
@@ -111,17 +123,25 @@ function MessageWindow() {
             </div>
           </div>
 
-          <div>
+          <div className={styles.navActionsContainer}>
             <Link to="/conversations">
+              <span className={styles.srOnly}>Accueil</span>
               <FaArrowLeft className={styles.homeIcon} />
             </Link>
+            <button onClick={handleReload} className={styles.reloadBtn}>
+              <span className={styles.srOnly}>Recharger la conversation</span>
+              <IoReload className={styles.reloadBtnIcon} />
+            </button>
           </div>
         </div>
       )}
 
       {receiver ? (
-        <div className={styles.conversationContainer}>
-          <div className={styles.messagesContainer}>
+        <main className={styles.conversationContainer}>
+          <h1 className={styles.srOnly}>
+            Conversation privée avec {receiver.username}
+          </h1>
+          <div className={styles.messagesContainer} ref={messagesEndRef}>
             {conv.length > 0 ? (
               conv.map((msg) => (
                 <div key={msg.id} className={styles.mContainer}>
@@ -134,6 +154,9 @@ function MessageWindow() {
                       onClick={() => handleDelete(msg.id)}
                       className={styles.deleteMsgButton}
                     >
+                      <span className={styles.srOnly}>
+                        Supprimer le message
+                      </span>
                       <FaTrash />
                     </button>
                   )}
@@ -145,7 +168,6 @@ function MessageWindow() {
                 moment.
               </p>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           <div className={styles.typingContainer}>
@@ -166,13 +188,19 @@ function MessageWindow() {
               name="message"
               id="message"
             />
+
             <button onClick={handleSendMessage} className={styles.sendButton}>
+              <span className={styles.srOnly}>Envoyer</span>
               <IoSend className={styles.sendButtonIcon} />
             </button>
           </div>
-        </div>
+        </main>
       ) : (
-        <p>Chargement de la conversation...</p>
+        <div className={styles.loadingMessageContainer}>
+          <p className={styles.loadingMessage}>
+            Chargement de la conversation...
+          </p>
+        </div>
       )}
     </div>
   );

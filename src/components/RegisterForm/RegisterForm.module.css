@@ -1,5 +1,5 @@
 .registerBackground {
-  min-height: 100vh;
+  height: 100dvh;
   background-color: rgb(248, 248, 248);
   display: flex;
   flex-direction: column;
@@ -28,36 +28,36 @@
 .passwordLabel,
 .confirmPasswordLabel {
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 0.5rem;
 }
 
 .passwordLabel,
 .emailLabel,
 .confirmPasswordLabel {
-  margin-top: 2rem;
+  margin-top: 10px;
 }
 
 .createTitle {
   margin-bottom: 2.5rem;
-  font-size: 25px;
+  font-size: 20px;
 }
 
-input {
-  padding: 1rem 1.5rem;
+.registerForm input {
+  padding: 12px 20px;
   border-radius: 10px;
   border: 1px solid rgb(206, 206, 206);
   width: 15rem;
 }
 
-input:focus {
+.registerForm input:focus {
   outline: 2px solid rgb(83, 83, 83);
 }
 
 .registerButton {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 15px 20px;
   border-radius: 5px;
   border: none;
   background-color: rgb(34, 34, 34);
@@ -65,7 +65,7 @@ input:focus {
   color: white;
   font-weight: 500;
   transition: all 0.2s ease;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .registerButton:hover {
@@ -97,5 +97,24 @@ a:hover {
 
   .registerButton {
     font-size: 16.5px;
+  }
+
+  .createTitle {
+    font-size: 23px;
+  }
+
+  .usernameLabel,
+  .emailLabel,
+  .passwordLabel,
+  .confirmPasswordLabel {
+    font-size: 17px;
+  }
+
+  .registerForm {
+    gap: 0.5rem;
+  }
+
+  .registerContainer a {
+    font-size: 18px;
   }
 }

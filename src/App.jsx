@@ -18,9 +18,12 @@ function App() {
     const fetchConversations = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get("http://localhost:3000/conversations", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/conversations`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setUsers(res.data);
         setIsLoading(false);
       } catch (error) {
@@ -39,49 +42,50 @@ function App() {
   };
 
   return (
-    <>
-      <div>
-        <div className={styles.nav}>
-          <Link to={`/dashboard/user/${user.id}`}>
-            <img
-              src={`http://localhost:3000${user.picture}`}
-              alt="Photo de profil utilisateur"
-              className={styles.navProfilePicture}
-            />
-            {user.username}
-          </Link>
-          <button onClick={logout} className={styles.logoutButton}>
-            <RiLogoutBoxFill className={styles.logoutIcon} />{" "}
-            <span>Déconnexion</span>
+    <div className={styles.appContainer}>
+      <div className={styles.nav}>
+        <Link to={`/dashboard/user/${user.id}`}>
+          <img
+            src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${user.picture}`}
+            onError={(e) => {
+              e.currentTarget.src = "/assets/default.webp";
+            }}
+            alt="Photo de profil utilisateur"
+            className={styles.navProfilePicture}
+          />
+          {user.username}
+        </Link>
+        <button onClick={logout} className={styles.logoutButton}>
+          <RiLogoutBoxFill className={styles.logoutIcon} />{" "}
+          <span className={styles.srOnly}>Déconnexion</span>
+        </button>
+      </div>
+
+      <div className={styles.contentContainer}>
+        <div className={styles.displayContainer}>
+          <button
+            type="button"
+            onClick={showConvList}
+            className={!isSearching ? styles.activeTab : styles.inactiveTab}
+          >
+            Vos conversations
+          </button>
+          <button
+            type="button"
+            onClick={showSearchUser}
+            className={isSearching ? styles.activeTab : styles.inactiveTab}
+          >
+            Chercher un utilisateur
           </button>
         </div>
 
-        <div>
-          <div className={styles.displayContainer}>
-            <button
-              type="button"
-              onClick={showConvList}
-              className={!isSearching ? styles.activeTab : styles.inactiveTab}
-            >
-              Vos conversations
-            </button>
-            <button
-              type="button"
-              onClick={showSearchUser}
-              className={isSearching ? styles.activeTab : styles.inactiveTab}
-            >
-              Chercher un utilisateur
-            </button>
-          </div>
-
-          {isSearching ? (
-            <SearchBar />
-          ) : (
-            <Convs users={users} isLoading={isLoading} />
-          )}
-        </div>
+        {isSearching ? (
+          <SearchBar />
+        ) : (
+          <Convs users={users} isLoading={isLoading} />
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

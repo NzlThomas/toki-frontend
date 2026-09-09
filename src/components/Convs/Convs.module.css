@@ -1,8 +1,39 @@
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mainContainer {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollWrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.loadingMessage {
+  text-align: center;
+}
+
 .linkCard {
   text-decoration: none;
   color: black;
   font-weight: 500;
   box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2);
+  width: 85%;
 }
 
 .linkCard:hover {
@@ -11,21 +42,24 @@
 }
 
 .profilePicture {
-  width: 5rem;
+  width: 4rem;
   border-radius: 5px;
 }
 
 .convsListContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.8rem;
+  padding: 1rem 0;
 }
+
 .cardContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 12px 0;
   padding-left: 1rem;
 }
 
@@ -72,5 +106,9 @@
 
   .bioParagraph {
     font-size: 15px;
+  }
+
+  .profilePicture {
+    width: 5rem;
   }
 }
