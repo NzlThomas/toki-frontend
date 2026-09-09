@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
+import api from "../../api/api.js";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import axios from "axios";
 import styles from "./Dashboard.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -21,10 +21,9 @@ function Dashboard() {
   const [isUsernameChanged, setIsUsernameChanged] = useState(false);
   const [isBioChanged, setIsBioChanged] = useState(false);
 
-  const profilePictureUrl = `http://localhost:3000${user.picture}`;
-
   useEffect(() => {
     user.id !== requestedId && navigate("/");
+    document.title = "Toki | Profil";
   }, [navigate, requestedId, user.id]);
 
   const handleSubmit = async (e) => {
@@ -45,11 +44,9 @@ function Dashboard() {
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:3000/user-details/${user.id}`,
-        updatedData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await api.put(`/user-details/${user.id}`, updatedData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const updatedInfos = response.data.updatedInfos;
       setUser((prev) => ({ ...prev, ...updatedInfos }));
@@ -102,16 +99,12 @@ function Dashboard() {
     formData.append("picture", picture);
 
     try {
-      const res = await axios.put(
-        `http://localhost:3000/profile-picture/${user.id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await api.put(`/profile-picture/${user.id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setIsPictureChanged(false);
       const updatedProfilePicture = res.data.updatedUser.picture;
       setUser((prev) => ({ ...prev, picture: updatedProfilePicture }));
@@ -122,17 +115,22 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <main>
       <div className={styles.nav}>
         <Link to="/conversations">
+          <span className={styles.srOnly}>Accueil</span>
           <FaArrowLeft className={styles.homeIcon} />
         </Link>
       </div>
 
       <div className={styles.dashboardContainer}>
+        <h1 className={styles.srOnly}>Votre profil</h1>
         <div className={styles.picContainer}>
           <img
-            src={profilePictureUrl}
+            src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${user.picture}`}
+            onError={(e) => {
+              e.currentTarget.src = "/assets/default.webp";
+            }}
             alt="Photo de profil"
             className={styles.profilePicture}
           />
@@ -167,7 +165,7 @@ function Dashboard() {
           <form onSubmit={handleSubmit} className={styles.infosForm}>
             <div className={styles.nameContainer}>
               <label htmlFor="username" className={styles.usernameLabel}>
-                Nom d'utilisateur:
+                Nom d'utilisateur
               </label>
               <input
                 name="username"
@@ -186,7 +184,7 @@ function Dashboard() {
 
             <div className={styles.bioContainer}>
               <label htmlFor="bio" className={styles.bioLabel}>
-                Bio:
+                Bio
               </label>
               <textarea
                 className={styles.dashboardTextarea}
@@ -220,7 +218,7 @@ function Dashboard() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

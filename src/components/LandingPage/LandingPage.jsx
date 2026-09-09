@@ -37,11 +37,11 @@ function LandingPage() {
         </div>
 
         <div className={styles.linksContainer}>
-          <Link to="/login" className={styles.loginLink}>
-            Se connecter
-          </Link>
           <Link to="/register" className={styles.registerLink}>
             Créer un compte
+          </Link>
+          <Link to="/login" className={styles.loginLink}>
+            Se connecter
           </Link>
         </div>
       </div>
