@@ -21,12 +21,13 @@ const AuthProvider = ({ children }) => {
           }
 
           const response = await axios.get(
-            `http://localhost:3000/users/${decoded.userId}`,
+            `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/users/${decoded.userId}`,
+
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            }
+            },
           );
 
           setUser(response.data);
