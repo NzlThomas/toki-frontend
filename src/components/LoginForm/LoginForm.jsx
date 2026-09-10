@@ -34,7 +34,7 @@ function LoginForm() {
         password,
       });
 
-      login(res.data.token, res.data.user);
+      login(res.data.user);
       navigate("/conversations");
     } catch (error) {
       console.error("Error:", error);

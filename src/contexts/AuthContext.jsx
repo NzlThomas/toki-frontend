@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+import api from "../api/api";
 
 const AuthContext = createContext();
 
@@ -9,45 +8,25 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem("accessToken");
-
-      if (token) {
-        try {
-          const decoded = jwtDecode(token);
-
-          if (Date.now() >= decoded.exp * 1000) {
-            localStorage.removeItem("accessToken");
-            return;
-          }
-
-          const response = await axios.get(
-            `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/users/${decoded.userId}`,
-
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            },
-          );
-
-          setUser(response.data);
-        } catch (error) {
-          console.error(error);
-          localStorage.removeItem("accessToken");
-          setUser(null);
+      try {
+        const res = await api.get("/profile");
+        setUser(res.data.user);
+      } catch (error) {
+        if (error.response?.status !== 401) {
+          console.error("Unexpected auth error:", error);
         }
+        setUser(null);
       }
     };
     checkAuth();
   }, []);
 
-  const login = (token, userData) => {
-    localStorage.setItem("accessToken", token);
+  const login = (userData) => {
     setUser(userData);
   };
 
-  const logout = () => {
-    localStorage.removeItem("accessToken");
+  const logout = async () => {
+    await api.post("/logout");
     setUser(null);
   };
 

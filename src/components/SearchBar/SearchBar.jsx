@@ -8,7 +8,6 @@ function SearchBar() {
   const [results, setResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (search.trim() === "") {
@@ -20,9 +19,7 @@ function SearchBar() {
     const timeout = setTimeout(async () => {
       try {
         setIsLoading(true);
-        const res = await api.get(`/search/users/${search}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/search/users/${search}`);
         setResults(res.data);
         setHasSearched(true);
         setIsLoading(false);
@@ -32,7 +29,7 @@ function SearchBar() {
     }, 400);
 
     return () => clearTimeout(timeout);
-  }, [search, token]);
+  }, [search]);
 
   return (
     <main className={styles.mainContainer}>
