@@ -25,7 +25,7 @@ function Convs({ users, isLoading }) {
                   >
                     <div className={styles.cardContainer}>
                       <img
-                        src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${user.picture}`}
+                        src={user.picture}
                         onError={(e) => {
                           e.currentTarget.src = "/assets/default.webp";
                         }}

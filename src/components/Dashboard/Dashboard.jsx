@@ -109,7 +109,7 @@ function Dashboard() {
   return (
     <main>
       <div className={styles.nav}>
-        <Link to="/conversations">
+        <Link to="/conversations" title="Retourner à l'accueil">
           <span className={styles.srOnly}>Accueil</span>
           <FaArrowLeft className={styles.homeIcon} />
         </Link>
@@ -119,7 +119,7 @@ function Dashboard() {
         <h1 className={styles.srOnly}>Votre profil</h1>
         <div className={styles.picContainer}>
           <img
-            src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${user.picture}`}
+            src={user.picture}
             onError={(e) => {
               e.currentTarget.src = "/assets/default.webp";
             }}

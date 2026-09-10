@@ -38,9 +38,9 @@ function App() {
   return (
     <div className={styles.appContainer}>
       <div className={styles.nav}>
-        <Link to={`/dashboard/user/${user.id}`}>
+        <Link to={`/dashboard/user/${user.id}`} title="Votre profil">
           <img
-            src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${user.picture}`}
+            src={user.picture}
             onError={(e) => {
               e.currentTarget.src = "/assets/default.webp";
             }}
@@ -49,7 +49,12 @@ function App() {
           />
           {user.username}
         </Link>
-        <button onClick={logout} className={styles.logoutButton}>
+
+        <button
+          onClick={logout}
+          className={styles.logoutButton}
+          title="Déconnexion"
+        >
           <RiLogoutBoxFill className={styles.logoutIcon} />{" "}
           <span className={styles.srOnly}>Déconnexion</span>
         </button>
