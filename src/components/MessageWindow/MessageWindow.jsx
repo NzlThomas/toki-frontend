@@ -81,13 +81,14 @@ function MessageWindow() {
       console.error(error);
     }
   };
+
   return (
     <div className={styles.layoutContainer}>
       {receiver && (
         <div className={styles.receiverHeader}>
           <div className={styles.receiverInfos}>
             <img
-              src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${receiver.picture}`}
+              src={receiver.picture}
               onError={(e) => {
                 e.currentTarget.src = "/assets/default.webp";
               }}
@@ -103,11 +104,15 @@ function MessageWindow() {
           </div>
 
           <div className={styles.navActionsContainer}>
-            <Link to="/conversations">
+            <Link to="/conversations" title="Retourner à l'accueil">
               <span className={styles.srOnly}>Accueil</span>
               <FaArrowLeft className={styles.homeIcon} />
             </Link>
-            <button onClick={handleReload} className={styles.reloadBtn}>
+            <button
+              onClick={handleReload}
+              className={styles.reloadBtn}
+              title="Recharger la conversation"
+            >
               <span className={styles.srOnly}>Recharger la conversation</span>
               <IoReload className={styles.reloadBtnIcon} />
             </button>
@@ -124,7 +129,7 @@ function MessageWindow() {
             {conv.length > 0 ? (
               conv.map((msg) => (
                 <div key={msg.id} className={styles.mContainer}>
-                  <p>
+                  <p title={new Date(msg.createdAt).toLocaleString()}>
                     <span>{msg.sender.username} : </span>
                     {msg.text}
                   </p>
@@ -132,6 +137,7 @@ function MessageWindow() {
                     <button
                       onClick={() => handleDelete(msg.id)}
                       className={styles.deleteMsgButton}
+                      title="Supprimer le message"
                     >
                       <span className={styles.srOnly}>
                         Supprimer le message
@@ -168,7 +174,11 @@ function MessageWindow() {
               id="message"
             />
 
-            <button onClick={handleSendMessage} className={styles.sendButton}>
+            <button
+              onClick={handleSendMessage}
+              className={styles.sendButton}
+              title="Envoyer le message"
+            >
               <span className={styles.srOnly}>Envoyer</span>
               <IoSend className={styles.sendButtonIcon} />
             </button>

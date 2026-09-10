@@ -60,7 +60,7 @@ function SearchBar() {
                         <Link to={`/messages/${r.id}`}>
                           <div className={styles.cardContainer}>
                             <img
-                              src={`${import.meta.env.VITE_API_URL.replace(/\/$/, "")}${r.picture}`}
+                              src={r.picture}
                               onError={(e) => {
                                 e.currentTarget.src = "/assets/default.webp";
                               }}
