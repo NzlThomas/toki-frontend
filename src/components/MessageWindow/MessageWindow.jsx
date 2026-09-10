@@ -9,7 +9,6 @@ import { FaTrash } from "react-icons/fa6";
 
 function MessageWindow() {
   const { user } = useContext(AuthContext);
-  const token = localStorage.getItem("accessToken");
   const receiverId = Number(useParams().id);
   const [conv, setConv] = useState([]);
   const [receiver, setReceiver] = useState(null);
@@ -19,11 +18,7 @@ function MessageWindow() {
   useEffect(() => {
     const fetchConv = async () => {
       try {
-        const response = await api.get(`/messages/${receiverId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await api.get(`/messages/${receiverId}`);
 
         setConv(response.data.conversation);
       } catch (error) {
@@ -33,11 +28,7 @@ function MessageWindow() {
 
     const fetchReceiver = async () => {
       try {
-        const response = await api.get(`/user/${receiverId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await api.get(`/user/${receiverId}`);
         setReceiver(response.data);
       } catch (error) {
         console.error(error);
@@ -45,7 +36,7 @@ function MessageWindow() {
     };
     fetchReceiver();
     fetchConv();
-  }, [receiverId, token]);
+  }, [receiverId]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -62,13 +53,7 @@ function MessageWindow() {
       if (message.trim() === "") {
         return;
       }
-      const response = await api.post(
-        `/messages/${receiverId}`,
-        { message },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const response = await api.post(`/messages/${receiverId}`, { message });
       setMessage("");
       const { newMessage } = response.data;
       setConv((prevConv) => [...prevConv, newMessage]);
@@ -79,11 +64,7 @@ function MessageWindow() {
 
   const handleReload = async () => {
     try {
-      const response = await api.get(`/messages/${receiverId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get(`/messages/${receiverId}`);
 
       setConv(response.data.conversation);
     } catch (error) {
@@ -93,9 +74,7 @@ function MessageWindow() {
 
   const handleDelete = async (messageId) => {
     try {
-      const response = await api.delete(`/message/${messageId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.delete(`/message/${messageId}`);
       const deletedMessage = response.data.deletedMessage;
       setConv((prevConv) => prevConv.filter((m) => m.id !== deletedMessage.id));
     } catch (error) {

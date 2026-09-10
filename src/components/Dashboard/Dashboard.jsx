@@ -7,7 +7,6 @@ import { FaArrowLeft } from "react-icons/fa";
 
 function Dashboard() {
   const { user, setUser } = useContext(AuthContext);
-  const token = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const params = useParams();
   const requestedId = Number(params.id);
@@ -44,9 +43,7 @@ function Dashboard() {
     }
 
     try {
-      const response = await api.put(`/user-details/${user.id}`, updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.put(`/user-details/${user.id}`, updatedData);
 
       const updatedInfos = response.data.updatedInfos;
       setUser((prev) => ({ ...prev, ...updatedInfos }));
@@ -99,12 +96,7 @@ function Dashboard() {
     formData.append("picture", picture);
 
     try {
-      const res = await api.put(`/profile-picture/${user.id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await api.put(`/profile-picture/${user.id}`, formData);
       setIsPictureChanged(false);
       const updatedProfilePicture = res.data.updatedUser.picture;
       setUser((prev) => ({ ...prev, picture: updatedProfilePicture }));

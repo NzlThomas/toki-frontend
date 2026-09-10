@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "./api/api";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Convs from "./components/Convs/Convs";
@@ -12,18 +12,12 @@ function App() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/conversations`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const res = await api.get(`/conversations`);
         setUsers(res.data);
         setIsLoading(false);
       } catch (error) {
@@ -31,7 +25,7 @@ function App() {
       }
     };
     fetchConversations();
-  }, [token]);
+  }, []);
 
   const showSearchUser = () => {
     setIsSearching(true);
