@@ -90,7 +90,13 @@ function LoginForm() {
               Se connecter
             </button>
           </form>
-          <Link to="/register">Créer un compte</Link>
+          <Link to="/register" className={styles.registerLink}>
+            Créer un compte
+          </Link>
+
+          <Link to="/forgot-password" className={styles.forgotPassword}>
+            J'ai oublié mon mot de passe
+          </Link>
         </div>
       </div>
     </main>
