@@ -16,6 +16,10 @@ function MessageWindow() {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    if (!user?.emailVerified) {
+      return;
+    }
+
     const fetchConv = async () => {
       try {
         const response = await api.get(`/messages/${receiverId}`);
@@ -36,7 +40,7 @@ function MessageWindow() {
     };
     fetchReceiver();
     fetchConv();
-  }, [receiverId]);
+  }, [receiverId, user?.emailVerified]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -49,6 +53,9 @@ function MessageWindow() {
   }, [conv, receiver]);
 
   const handleSendMessage = async () => {
+    if (!user?.emailVerified) {
+      return;
+    }
     try {
       if (message.trim() === "") {
         return;
@@ -63,6 +70,9 @@ function MessageWindow() {
   };
 
   const handleReload = async () => {
+    if (!user?.emailVerified) {
+      return;
+    }
     try {
       const response = await api.get(`/messages/${receiverId}`);
 
@@ -73,6 +83,9 @@ function MessageWindow() {
   };
 
   const handleDelete = async (messageId) => {
+    if (!user?.emailVerified) {
+      return;
+    }
     try {
       const response = await api.delete(`/message/${messageId}`);
       const deletedMessage = response.data.deletedMessage;

@@ -5,6 +5,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 import Dashboard from "./components/Dashboard/Dashboard";
 import LandingPage from "./components/LandingPage/LandingPage";
+import EmailVerification from "./components/EmailVerification/EmailVerification";
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/",
     element: <LandingPage />,
+  },
+  {
+    path: "/verify-email",
+    element: <EmailVerification />,
   },
   {
     path: "/conversations",
