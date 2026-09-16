@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../../api/api.js";
 import styles from "./SearchBar.module.css";
 
-function SearchBar() {
+function SearchBar({ isEmailVerified }) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
@@ -43,6 +43,7 @@ function SearchBar() {
           aria-label="Chercher un utilisateur"
           name="searchUser"
           className={styles.input}
+          disabled={!isEmailVerified}
         />
       </div>
 
@@ -51,6 +52,11 @@ function SearchBar() {
           <div className={styles.convsListContainer}>
             {isLoading ? (
               <p className={styles.loadingMessage}>Chargement en cours...</p>
+            ) : !isEmailVerified ? (
+              <p className={styles.userNotFound}>
+                Veuillez vérifier votre adresse email pour accéder à la
+                recherche.
+              </p>
             ) : (
               <>
                 {hasSearched &&

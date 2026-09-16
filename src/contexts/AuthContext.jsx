@@ -30,9 +30,25 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const refreshUser = async () => {
+    try {
+      const res = await api.get("/profile");
+      setUser(res.data.user);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, login, logout, isAuthenticated: !!user }}
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        refreshUser,
+        isAuthenticated: !!user,
+      }}
     >
       {children}
     </AuthContext.Provider>
