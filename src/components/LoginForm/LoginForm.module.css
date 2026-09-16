@@ -84,6 +84,11 @@ a:hover {
   text-align: center;
 }
 
+.forgotPassword {
+  margin-top: 2rem;
+  font-size: 14px;
+}
+
 @media (min-width: 1200px) {
   .loginContainer {
     width: 25%;
@@ -103,7 +108,11 @@ a:hover {
     font-size: 17px;
   }
 
-  .loginContainer a {
+  .registerLink {
     font-size: 18px;
+  }
+
+  .forgotPassword {
+    font-size: 16px;
   }
 }

@@ -6,6 +6,8 @@ import MessageWindow from "./components/MessageWindow/MessageWindow";
 import Dashboard from "./components/Dashboard/Dashboard";
 import LandingPage from "./components/LandingPage/LandingPage";
 import EmailVerification from "./components/EmailVerification/EmailVerification";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 
 const routes = [
   {
@@ -23,6 +25,14 @@ const routes = [
   {
     path: "/verify-email",
     element: <EmailVerification />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/conversations",
