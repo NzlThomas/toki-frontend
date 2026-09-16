@@ -15,17 +15,23 @@ function App() {
 
   useEffect(() => {
     const fetchConversations = async () => {
-      try {
-        setIsLoading(true);
-        const res = await api.get(`/conversations`);
-        setUsers(res.data);
+      if (!user?.emailVerified) {
         setIsLoading(false);
+        return;
+      }
+
+      try {
+        const res = await api.get("/conversations");
+        setUsers(res.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
+
     fetchConversations();
-  }, []);
+  }, [user]);
 
   const showSearchUser = () => {
     setIsSearching(true);
@@ -79,9 +85,13 @@ function App() {
         </div>
 
         {isSearching ? (
-          <SearchBar />
+          <SearchBar isEmailVerified={user?.emailVerified} />
         ) : (
-          <Convs users={users} isLoading={isLoading} />
+          <Convs
+            users={users}
+            isLoading={isLoading}
+            isEmailVerified={user?.emailVerified}
+          />
         )}
       </div>
     </div>
