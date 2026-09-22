@@ -58,12 +58,6 @@
   transform: rotate(180deg);
 }
 
-.navActionsContainer {
-  display: flex;
-  gap: 1rem;
-  margin-right: 5px;
-}
-
 .receiverInfos {
   display: flex;
   align-items: center;

@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import api from "../api/api";
+import socket from "../sockets/socket";
 
 const AuthContext = createContext();
 
@@ -27,6 +28,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await api.post("/logout");
+    socket.disconnect();
     setUser(null);
   };
 

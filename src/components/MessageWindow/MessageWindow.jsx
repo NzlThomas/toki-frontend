@@ -7,6 +7,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { IoSend, IoReload } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa6";
 
+import socket from "../../sockets/socket";
+
 function MessageWindow() {
   const { user } = useContext(AuthContext);
   const receiverId = Number(useParams().id);
@@ -52,6 +54,29 @@ function MessageWindow() {
       : (document.title = "Toki | Chargement de la conversation");
   }, [conv, receiver]);
 
+  useEffect(() => {
+    socket.connect();
+
+    socket.on("new-message", (message) => {
+      if (
+        message.senderId === receiverId ||
+        message.receiverId === receiverId
+      ) {
+        setConv((prev) => [...prev, message]);
+      }
+    });
+
+    socket.on("message-deleted", (message) => {
+      setConv((prev) => prev.filter((msg) => msg.id !== message.id));
+    });
+
+    return () => {
+      socket.off("new-message");
+      socket.off("message-deleted");
+      socket.disconnect();
+    };
+  }, [receiverId]);
+
   const handleSendMessage = async () => {
     if (!user?.emailVerified) {
       return;
@@ -64,19 +89,6 @@ function MessageWindow() {
       setMessage("");
       const { newMessage } = response.data;
       setConv((prevConv) => [...prevConv, newMessage]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleReload = async () => {
-    if (!user?.emailVerified) {
-      return;
-    }
-    try {
-      const response = await api.get(`/messages/${receiverId}`);
-
-      setConv(response.data.conversation);
     } catch (error) {
       console.error(error);
     }
@@ -116,20 +128,10 @@ function MessageWindow() {
             </div>
           </div>
 
-          <div className={styles.navActionsContainer}>
-            <Link to="/conversations" title="Retourner à l'accueil">
-              <span className={styles.srOnly}>Accueil</span>
-              <FaArrowLeft className={styles.homeIcon} />
-            </Link>
-            <button
-              onClick={handleReload}
-              className={styles.reloadBtn}
-              title="Recharger la conversation"
-            >
-              <span className={styles.srOnly}>Recharger la conversation</span>
-              <IoReload className={styles.reloadBtnIcon} />
-            </button>
-          </div>
+          <Link to="/conversations" title="Retourner à l'accueil">
+            <span className={styles.srOnly}>Accueil</span>
+            <FaArrowLeft className={styles.homeIcon} />
+          </Link>
         </div>
       )}
 
