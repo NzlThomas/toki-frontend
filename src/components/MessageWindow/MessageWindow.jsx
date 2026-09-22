@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import api from "../../api/api.Js";
+import api from "../../api/api.js";
 import styles from "./MessageWindow.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoSend, IoReload } from "react-icons/io5";
