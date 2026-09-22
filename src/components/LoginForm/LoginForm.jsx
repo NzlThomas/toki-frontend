@@ -8,6 +8,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [slowRequest, setSlowRequest] = useState(false);
 
   const { login, user } = useContext(AuthContext);
 
@@ -28,6 +29,12 @@ function LoginForm() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
+    setSlowRequest(false);
+
+    const timer = setTimeout(() => {
+      setSlowRequest(true);
+    }, 5000);
+
     try {
       const res = await api.post("/login", {
         email,
@@ -39,6 +46,8 @@ function LoginForm() {
     } catch (error) {
       console.error("Error:", error);
       errorLogin();
+    } finally {
+      clearTimeout(timer);
     }
   };
 
@@ -46,6 +55,14 @@ function LoginForm() {
     <main>
       <div className={styles.loginBackground}>
         <div className={styles.loginContainer}>
+          {slowRequest && (
+            <div className={styles.slowMessageContainer}>
+              <p className={styles.slowMessage}>
+                Connexion en cours, veuillez patienter.
+              </p>
+              <div className={styles.loader}></div>
+            </div>
+          )}
           <h1 className={styles.loginTitle}>Se connecter:</h1>
           <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
             <label htmlFor="email" className={styles.emailLabel}>

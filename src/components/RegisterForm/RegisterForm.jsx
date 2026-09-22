@@ -10,6 +10,7 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [slowRequest, setSlowRequest] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,6 +26,13 @@ function RegisterForm() {
       handlePasswordError();
       return;
     }
+
+    setSlowRequest(false);
+
+    const timer = setTimeout(() => {
+      setSlowRequest(true);
+    }, 5000);
+
     try {
       await api.post("/register", {
         username,
@@ -39,6 +47,8 @@ function RegisterForm() {
       navigate("/login");
     } catch (error) {
       console.error(error);
+    } finally {
+      clearTimeout(timer);
     }
   };
 
@@ -46,6 +56,14 @@ function RegisterForm() {
     <main>
       <div className={styles.registerBackground}>
         <div className={styles.registerContainer}>
+          {slowRequest && (
+            <div className={styles.slowMessageContainer}>
+              <p className={styles.slowMessage}>
+                Création du compte, veuillez patienter.
+              </p>
+              <div className={styles.loader}></div>
+            </div>
+          )}
           <h1 className={styles.createTitle}>Créer un compte:</h1>
           <form onSubmit={handleRegisterSubmit} className={styles.registerForm}>
             <label htmlFor="username" className={styles.usernameLabel}>
